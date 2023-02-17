@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/RaymondCode/simple-demo/controller"
+	"github.com/Ljkkun/GreenBeanMiners/controller"
 	"github.com/gin-gonic/gin"
 )
 
