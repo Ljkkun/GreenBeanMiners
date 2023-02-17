@@ -1,0 +1,22 @@
+gin:
+  host: 0.0.0.0
+  port: 8080
+
+jwt:
+  signing_key: green_bean_miners
+
+mysql:
+  host: localhost
+  port: 3306
+  username: root
+  password: 123456
+  db_name: simpledous
+  max_open_conns: 100
+  max_idle_conns: 10
+
+redis:
+  host: localhost
+  port: 6379
+  password:
+  db: 1
+  pool_size: 100
