@@ -16,7 +16,7 @@ func Global() {
 	global.ID_GENERATOR = sonyflake.NewSonyflake(sonyflake.Settings{
 		StartTime: startTime,
 	})
-	// 创建video存放目录
+	// 创建 video 存放目录
 	util.CheckPathAndCreate(global.VIDEO_ADDR)
 	util.CheckPathAndCreate(global.COVER_ADDR)
 	// 创建白名单类型
