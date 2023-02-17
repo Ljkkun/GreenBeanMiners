@@ -23,11 +23,13 @@ type Comment struct {
 }
 
 type User struct {
-	Id            int64  `json:"id,omitempty"`
-	Name          string `json:"name,omitempty"`
-	FollowCount   int64  `json:"follow_count,omitempty"`
-	FollowerCount int64  `json:"follower_count,omitempty"`
-	IsFollow      bool   `json:"is_follow,omitempty"`
+	ID             uint64 `json:"id"`
+	Name           string `json:"name"`
+	FollowCount    int64  `json:"follow_count,omitempty"`
+	FollowerCount  int64  `json:"follower_count,omitempty"`
+	TotalFavorited int64  `json:"total_favorited,omitempty"`
+	FavoriteCount  int64  `json:"favorite_count,omitempty"`
+	IsFollow       bool   `json:"is_follow"`
 }
 
 type Message struct {
