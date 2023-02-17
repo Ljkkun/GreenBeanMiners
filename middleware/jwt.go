@@ -28,7 +28,7 @@ func JWT() gin.HandlerFunc {
 		}
 		userID := claims.UserID
 
-		// 保存userID到Context的key中，可以通过Get()取
+		// 保存 userID 到 Context的 key 中，可以通过Get()取
 		c.Set("UserID", userID)
 
 		// 执行函数
