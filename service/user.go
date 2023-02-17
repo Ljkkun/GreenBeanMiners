@@ -10,7 +10,6 @@ import (
 // Register 用户注册
 func Register(username string, password string) (user *model.User, err error) {
 	//判断用户名是否存在
-	user = new(model.User)
 	result := global.DB.Where("name = ?", username).Limit(1).Find(&user)
 	if result.RowsAffected != 0 {
 		err = errors.New("user already exists")
@@ -49,7 +48,7 @@ func UserInfoByUserID(userID uint64) (user *model.User, err error) {
 		return nil, err
 	}
 	// 检查 userID 是否存在；若存在，获取用户信息
-	result := global.DB.Where("user_id = ?", userID).Limit(1).Find(&user)
+	result := global.DB.Where("id = ?", userID).Limit(1).Find(&user)
 	// 查询关注数目
 	global.DB.Model(&model.User{}).Where("follow_count  = ? and is_follow = ?", user.UserID, true).
 		Count(&user.FollowCount)
@@ -57,7 +56,7 @@ func UserInfoByUserID(userID uint64) (user *model.User, err error) {
 	global.DB.Model(&model.User{}).Where("follower_count  = ? and is_follow = ?", user.UserID, true).
 		Count(&user.FollowerCount)
 	// 查询点赞数目
-	global.DB.Model(&model.User{}).Where("user_id = ? and is_favorite = ?", user.UserID, true).
+	global.DB.Model(&model.User{}).Where("id = ? and is_favorite = ?", user.UserID, true).
 		Count(&user.FavoriteCount)
 	// 查询总点赞数目
 	var publishVideoIDList []uint64

@@ -23,7 +23,7 @@ func MySQL() {
 	// dsn := "用户名:密码@tcp(地址:端口)/数据库名"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", username, password, host, port, dbName)
 
-	// 配置Gorm连接到MySQL
+	// 配置 Gorm 连接到 MySQL
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,   // DSN
 		DefaultStringSize:         256,   // string 类型字段的默认长度

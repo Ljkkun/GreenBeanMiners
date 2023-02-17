@@ -15,7 +15,7 @@ mysql:
   max_idle_conns: 10
 
 redis:
-  host: localhost
+  host: 192.168.37.128
   port: 6379
   password:
   db: 1
