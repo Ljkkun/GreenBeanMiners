@@ -14,14 +14,24 @@ import (
 // usersLoginInfo use map to store user info, and key is username+password for demo
 // user data will be cleared every time the server starts
 // test data: username=zhanglei, password=douyin
-// UserLoginResponse 用户登录响应结构体
+var usersLoginInfo = map[string]User{
+	"zhangleidouyin": {
+		Id:            1,
+		Name:          "zhanglei",
+		FollowCount:   10,
+		FollowerCount: 5,
+		IsFollow:      true,
+	},
+}
+
+var userIdSequence = int64(1)
+
 type UserLoginResponse struct {
 	Response
-	UserID uint64 `json:"user_id"`
+	UserID uint64 `json:"user_id,omitempty"`
 	Token  string `json:"token"`
 }
 
-// UserResponse 用户信息响应结构体
 type UserResponse struct {
 	Response
 	User User `json:"user"`
@@ -34,28 +44,28 @@ func Register(c *gin.Context) {
 	// 验证用户名合法性
 	if utf8.RuneCountInString(username) > global.MAX_USERNAME_LENGTH ||
 		utf8.RuneCountInString(username) <= 0 {
-		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: "非法用户名"})
+		c.JSON(200, Response{StatusCode: 1, StatusMsg: "非法用户名"})
 		return
 	}
 	// 验证密码合法性
 	if ok, _ := regexp.MatchString(global.MIN_PASSWORD_PATTERN, password); !ok {
-		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: "密码长度6-32，由字母大小写下划线组成"})
+		c.JSON(200, Response{StatusCode: 1, StatusMsg: "密码长度6-32，由字母大小写下划线组成"})
 		return
 	}
 	// 注册用户到数据库
 	userModel, err := service.Register(username, password)
 	if err != nil {
-		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: err.Error()})
+		c.JSON(200, Response{StatusCode: 1, StatusMsg: err.Error()})
 		return
 	}
 	// 生成对应 token
 	tokenString, err := util.GenerateToken(userModel)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, Response{StatusCode: 1, StatusMsg: err.Error()})
+		c.JSON(500, Response{StatusCode: 1, StatusMsg: err.Error()})
 		return
 	}
 	// 返回成功并生成响应 json
-	c.JSON(http.StatusOK, UserLoginResponse{
+	c.JSON(200, UserLoginResponse{
 		Response: Response{StatusCode: 0, StatusMsg: "OK"},
 		UserID:   userModel.UserID,
 		Token:    tokenString,
@@ -87,6 +97,21 @@ func Login(c *gin.Context) {
 }
 
 func UserInfo(c *gin.Context) {
+	token := c.Query("token")
+	if user, exist := usersLoginInfo[token]; exist {
+		c.JSON(200, UserResponse{
+			Response: Response{StatusCode: 0},
+			User:     user,
+		})
+	} else {
+		c.JSON(200, UserResponse{
+			Response: Response{StatusCode: 1, StatusMsg: "User doesn't exist"},
+		})
+	}
+}
+
+// UserInfos 获取用户信息
+func UserInfos(c *gin.Context) {
 	// 获取指定用户的 ID
 	userID, err := strconv.ParseUint(c.Query("user_id"), 10, 64)
 	if err != nil {
@@ -110,7 +135,7 @@ func UserInfo(c *gin.Context) {
 	c.JSON(http.StatusOK, UserResponse{
 		Response: Response{StatusCode: 0, StatusMsg: "OK"},
 		User: User{
-			Id:             userID,
+			Id:             userModel.UserID,
 			Name:           userModel.Name,
 			FollowCount:    userModel.FollowCount,
 			FollowerCount:  userModel.FollowerCount,

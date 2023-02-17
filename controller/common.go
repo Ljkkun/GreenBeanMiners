@@ -22,8 +22,9 @@ type Comment struct {
 	CreateDate string `json:"create_date,omitempty"`
 }
 
+// User 用户信息响应结构体
 type User struct {
-	ID             uint64 `json:"id"`
+	Id             uint64 `json:"id"`
 	Name           string `json:"name"`
 	FollowCount    int64  `json:"follow_count,omitempty"`
 	FollowerCount  int64  `json:"follower_count,omitempty"`
