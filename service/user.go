@@ -10,6 +10,7 @@ import (
 // Register 用户注册
 func Register(username string, password string) (user *model.User, err error) {
 	//判断用户名是否存在
+	user = new(model.User)
 	result := global.DB.Where("name = ?", username).Limit(1).Find(&user)
 	if result.RowsAffected != 0 {
 		err = errors.New("user already exists")
@@ -129,7 +130,7 @@ func GetUserListByUserIDList(UserIDList []uint64) ([]model.User, error) {
 	return userList, nil
 }
 
-// GetUserListByUserIDs 根据UserIDs获取对应的用户列表
+// GetUserListByUserIDs 根据 UserIDs 获取对应的用户列表
 func GetUserListByUserIDs(UserIDs []uint64, userList *[]model.User) (err error) {
 	userListPrototype, err := GetUserListByUserIDList(UserIDs)
 	*userList = userListPrototype
