@@ -50,8 +50,8 @@ func Publish(c *gin.Context) {
 		return
 	}
 	name := strconv.FormatUint(videoID, 10)
-	videoName := name + c.GetString("FileType")
-	coverName := name + ".jpg"
+	videoName := name + c.GetString("FileType") + ".mp4"
+	coverName := name
 
 	videoSavePath := filepath.Join(global.VIDEO_ADDR, videoName)
 	coverSavePath := filepath.Join(global.COVER_ADDR, coverName)
@@ -65,7 +65,7 @@ func Publish(c *gin.Context) {
 		return
 	}
 
-	if err = util.GetFrame(videoSavePath, coverSavePath); err != nil {
+	if _, err := util.GetFrame(videoSavePath, coverSavePath, 1); err != nil {
 		// 封面无法保存
 		c.JSON(http.StatusInternalServerError, Response{
 			StatusCode: 1,
@@ -181,11 +181,12 @@ func PublishList(c *gin.Context) {
 			isFavorite = isFavoriteList[i]
 		}
 		// 二次确认返回的视频与封面是服务器存在的
-		VideoLocation := filepath.Join(global.VIDEO_ADDR, video.PlayUrl)
+		VideoLocation := filepath.Join(global.VIDEO_ADDR, video.PlayName)
 		if _, err = os.Stat(VideoLocation); err != nil {
 			continue
 		}
-		CoverLocation := filepath.Join(global.COVER_ADDR, video.CoverUrl)
+		CoverLocation := filepath.Join(global.COVER_ADDR, video.CoverName)
+		CoverLocation += ".png"
 		if _, err = os.Stat(CoverLocation); err != nil {
 			continue
 		}
@@ -200,8 +201,8 @@ func PublishList(c *gin.Context) {
 
 		videoJson.Id = int64(video.VideoID)
 		videoJson.Author = authorJson
-		videoJson.PlayUrl = "http://" + c.Request.Host + "/static/video/" + video.PlayUrl
-		videoJson.CoverUrl = "http://" + c.Request.Host + "/static/cover/" + video.CoverUrl
+		videoJson.PlayName = "http://" + c.Request.Host + "/static/video/" + video.PlayName
+		videoJson.CoverName = "http://" + c.Request.Host + "/static/cover/" + video.CoverName
 		videoJson.FavoriteCount = video.FavoriteCount
 		videoJson.CommentCount = video.CommentCount
 		videoJson.Title = video.Title

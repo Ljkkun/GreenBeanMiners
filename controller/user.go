@@ -96,20 +96,6 @@ func Login(c *gin.Context) {
 	})
 }
 
-func UserInfos(c *gin.Context) {
-	token := c.Query("token")
-	if user, exist := usersLoginInfo[token]; exist {
-		c.JSON(200, UserResponse{
-			Response: Response{StatusCode: 0},
-			User:     user,
-		})
-	} else {
-		c.JSON(200, UserResponse{
-			Response: Response{StatusCode: 1, StatusMsg: "User doesn't exist"},
-		})
-	}
-}
-
 // UserInfo 获取用户信息
 func UserInfo(c *gin.Context) {
 	// 获取指定用户的 ID
