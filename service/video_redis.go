@@ -27,7 +27,7 @@ func GoVideoList(videoList []model.Video) error {
 	pipe := global.REDIS.TxPipeline()
 	for _, video := range videoList {
 		keyVideo := fmt.Sprintf(VideoPattern, video.VideoID)
-		pipe.HSet(global.CONTEXT, keyVideo, "title", video.Title, "play_name", video.PlayUrl, "cover_name", video.CoverUrl,
+		pipe.HSet(global.CONTEXT, keyVideo, "title", video.Title, "play_name", video.PlayName, "cover_name", video.CoverName,
 			"favorite_count", video.FavoriteCount, "comment_count", video.CommentCount, "author_id", video.AuthorID, "created_at", video.CreatedAt.UnixMilli())
 		pipe.Expire(global.CONTEXT, keyVideo, global.VIDEO_EXPIRE+time.Duration(rand.Float64()*global.EXPIRE_TIME_JITTER.Seconds())*time.Second)
 	}
@@ -70,7 +70,7 @@ func PublishEvent(video model.Video, listZ ...*redis.Z) error {
 	pipe.ZAdd(global.CONTEXT, keyPublish, listZ...)
 	pipe.Expire(global.CONTEXT, keyPublish, global.PUBLISH_EXPIRE+time.Duration(rand.Float64()*global.EXPIRE_TIME_JITTER.Seconds())*time.Second)
 
-	pipe.HSet(global.CONTEXT, keyVideo, "author_id", video.AuthorID, "play_name", video.PlayUrl, "cover_name", video.CoverUrl,
+	pipe.HSet(global.CONTEXT, keyVideo, "author_id", video.AuthorID, "play_name", video.PlayName, "cover_name", video.CoverName,
 		"favorite_count", video.FavoriteCount, "comment_count", video.CommentCount, "title", video.Title, "created_at", video.CreatedAt.UnixMilli())
 	pipe.Expire(global.CONTEXT, keyVideo, global.VIDEO_EXPIRE+time.Duration(rand.Float64()*global.EXPIRE_TIME_JITTER.Seconds())*time.Second)
 	pipe.Del(global.CONTEXT, keyEmpty)

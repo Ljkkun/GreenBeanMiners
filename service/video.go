@@ -12,11 +12,11 @@ import (
 
 // GetFeedVideosAndAuthorsRedis 获取推送视频以及其作者并返回视频数
 func GetFeedVideosAndAuthorsRedis(videoList *[]model.Video, authors *[]model.User, LatestTime int64, MaxNumVideo int) (int, error) {
-	// 确保feed在redis中
+	// 确保 feed 在 redis 中
 	if err := GoFeed(); err != nil {
 		return 0, err
 	}
-	// 初始化查询条件， Offset和Count用于分页
+	// 初始化查询条件， Offset和 Count用于分页
 	op := redis.ZRangeBy{
 		Min:    "0",                                                         // 最小分数
 		Max:    strconv.FormatFloat(float64(LatestTime-2)/1000, 'f', 3, 64), // 最大分数
@@ -56,14 +56,14 @@ func GetFeedVideosAndAuthorsRedis(videoList *[]model.Video, authors *[]model.Use
 // PublishVideo 将用户上传的视频信息写入数据库
 func PublishVideo(userID uint64, videoID uint64, videoName string, coverName string, title string) error {
 	video := model.Video{
-		VideoID:  videoID,
-		Title:    title,
-		PlayUrl:  videoName,
-		CoverUrl: coverName,
-		//FavoriteCount : 0,
-		//CommentCount : 0,
-		AuthorID:  userID,
-		CreatedAt: time.Now(),
+		VideoID:       videoID,
+		Title:         title,
+		PlayName:      videoName,
+		CoverName:     coverName,
+		FavoriteCount: 0,
+		CommentCount:  0,
+		AuthorID:      userID,
+		CreatedAt:     time.Now(),
 	}
 	if global.DB.Create(&video).Error != nil {
 		return errors.New("video表插入失败")
