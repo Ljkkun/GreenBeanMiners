@@ -44,10 +44,9 @@ func Router() {
 		authed.POST("/relation/action/", controller.RelationAction)
 	}
 
-	// 用户权限校验 + 文件格式大小检车
+	// 用户权限校验
 	authed2 := apiRouter.Group("/")
 	authed2.Use(middleware.JWT())
-	authed2.Use(middleware.FileCheck())
 	{
 		// basic apis
 		authed2.POST("/publish/action/", controller.Publish)
