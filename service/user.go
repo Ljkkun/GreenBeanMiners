@@ -89,7 +89,7 @@ func GetUserListByUserIDList(UserIDList []uint64) ([]model.User, error) {
 		return userList, nil
 	}
 	var uniqueUserList []model.User
-	result := global.DB.Where("user_id in ?", notInCache).Find(&uniqueUserList)
+	result := global.DB.Where("id in ?", notInCache).Find(&uniqueUserList)
 	if result.Error != nil {
 		return nil, result.Error
 	}
