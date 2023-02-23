@@ -131,8 +131,8 @@ func Feed(c *gin.Context) {
 
 		videoJson.Id = int64(video.VideoID)
 		videoJson.Author = authorJson
-		videoJson.PlayName = "http://" + c.Request.Host + "/static/video/" + video.PlayName
-		videoJson.CoverName = "http://" + c.Request.Host + "/static/cover/" + video.CoverName + ".png"
+		videoJson.PlayName = "http://" + c.Request.Host + "/public/video/" + video.PlayName
+		videoJson.CoverName = "http://" + c.Request.Host + "/public/cover/" + video.CoverName + ".png"
 		videoJson.FavoriteCount = video.FavoriteCount
 		videoJson.CommentCount = video.CommentCount
 		videoJson.Title = video.Title

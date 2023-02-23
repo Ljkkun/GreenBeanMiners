@@ -6,13 +6,13 @@ type Response struct {
 }
 
 type Video struct {
-	Id            int64  `json:"id"`
+	Id            int64  `json:"id,omitempty"`
 	Author        User   `json:"author"`
-	PlayName      string `json:"play_name"`
-	CoverName     string `json:"cover_name"`
-	FavoriteCount int64  `json:"favorite_count"`
-	CommentCount  int64  `json:"comment_count"`
-	IsFavorite    bool   `json:"is_favorite"`
+	PlayName      string `json:"play_name,omitempty"`
+	CoverName     string `json:"cover_name,omitempty"`
+	FavoriteCount int64  `json:"favorite_count,omitempty"`
+	CommentCount  int64  `json:"comment_count,omitempty"`
+	IsFavorite    bool   `json:"is_favorite,omitempty"`
 	Title         string `json:"title"`
 }
 

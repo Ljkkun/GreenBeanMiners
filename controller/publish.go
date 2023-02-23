@@ -50,7 +50,7 @@ func Publish(c *gin.Context) {
 		return
 	}
 	name := strconv.FormatUint(videoID, 10)
-	videoName := name + c.GetString("FileType") + ".mp4"
+	videoName := name + c.GetString("FileType")
 	coverName := name
 
 	videoSavePath := filepath.Join(global.VIDEO_ADDR, videoName)
@@ -210,6 +210,7 @@ func PublishList(c *gin.Context) {
 
 		videoJsonList = append(videoJsonList, videoJson)
 	}
+
 	c.JSON(http.StatusOK, VideoListResponse{
 		Response: Response{
 			StatusCode: 0,
