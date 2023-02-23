@@ -55,6 +55,8 @@ func MySQL() {
 		global.DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Video{})
 		global.DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Message{})
 		global.DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Comment{})
+		global.DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Favorite{})
+		global.DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Follow{})
 	}
 
 }

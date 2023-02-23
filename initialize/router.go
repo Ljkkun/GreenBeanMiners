@@ -11,7 +11,7 @@ import (
 func Router() {
 	r := gin.Default()
 	// 静态文件存放目录
-	r.Static("/static", "./public")
+	r.Static("/static", "./public/video")
 
 	apiRouter := r.Group("/douyin")
 
@@ -47,6 +47,7 @@ func Router() {
 	// 用户权限校验
 	authed2 := apiRouter.Group("/")
 	authed2.Use(middleware.JWT())
+	authed2.Use(middleware.FileCheck())
 	{
 		// basic apis
 		authed2.POST("/publish/action/", controller.Publish)
