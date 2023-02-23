@@ -11,7 +11,7 @@ import (
 func Router() {
 	r := gin.Default()
 	// 静态文件存放目录
-	r.Static("/static", "./public/video")
+	r.Static("/public", "./public")
 
 	apiRouter := r.Group("/douyin")
 
