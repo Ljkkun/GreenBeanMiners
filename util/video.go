@@ -15,6 +15,7 @@ func GetFrame(videoPath, snapshotPath string, frameNum int) (snapshotName string
 	command := exec.Command("ffmpeg", "-i", videoPath, "-profile:v", "main", "-movflags", "+faststart", "-crf", "26", "-y", snapshotPath)
 	command.Stdout = &bytes.Buffer{}
 	command.Stderr = &bytes.Buffer{}
+	err = command.Run()
 
 	buf := bytes.NewBuffer(nil)
 	err = ffmpeg.Input(videoPath).
