@@ -1,21 +1,21 @@
-# simple-demo
+# simple-dou
 
-## 抖音项目服务端简单示例
+## 极简版抖音
 
 具体功能内容参考飞书说明文档
 
 工程无其他依赖，直接编译运行即可
 
 ```shell
-go build && ./simple-demo
+go build github.com/Ljkkun/GreenBeanMiners/main
 ```
 
 ### 功能说明
 
-接口功能不完善，仅作为示例
+接口功能完善
 
-* 用户登录数据保存在内存中，单次运行过程中有效
-* 视频上传后会保存到本地 public 目录中，访问时用 127.0.0.1:8080/static/video_name 即可
+* 用户登录数据保存在内存中，运行过程中有效
+* 视频上传后会保存到本地 public 目录中，访问时用 localhost:8080/static/video_name 即可
 
 ### 测试
 
