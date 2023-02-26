@@ -15,7 +15,7 @@ go build github.com/Ljkkun/GreenBeanMiners/main
 接口功能完善
 
 * 用户登录数据保存在内存中，运行过程中有效
-* 视频上传后会保存到本地 public 目录中，访问时用 localhost:8080/static/video_name 即可
+* 视频上传后会保存到本地 public 目录中，访问时用 localhost:8080/public/video_name 即可
 
 ### 测试
 
