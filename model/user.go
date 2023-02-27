@@ -11,8 +11,8 @@ type User struct {
 	FollowCount    int64     `gorm:"-" redis:"follow_count"`
 	FollowerCount  int64     `gorm:"-" redis:"follower_count"`
 	IsFollower     int64     `gorm:"-" redis:"is_follower"`
-	TotalFavorited int64     `gorm:"-" redis:"favorite_count"`
-	WorkCount      int64     `gorm:"-" redis:"favorite_count"`
+	TotalFavorited int64     `gorm:"-" redis:"total_forvited"`
+	WorkCount      int64     `gorm:"-" redis:"work_count"`
 	FavoriteCount  int64     `gorm:"-" redis:"favorite_count"`
 	CreatedAt      time.Time `gorm:"column:created_at" redis:"-"`
 	ExtInfo        *string   `gorm:"column:ext_info" redis:"-"`
