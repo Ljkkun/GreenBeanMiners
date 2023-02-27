@@ -115,7 +115,6 @@ func Feed(c *gin.Context) {
 			continue
 		}
 		CoverLocation := filepath.Join(global.COVER_ADDR, video.CoverName)
-		CoverLocation += ".png"
 		if _, err = os.Stat(CoverLocation); err != nil {
 			continue
 		}
@@ -129,10 +128,10 @@ func Feed(c *gin.Context) {
 		authorJson.FavoriteCount = author.FavoriteCount
 		authorJson.IsFollow = isFollow
 
-		videoJson.Id = int64(video.VideoID)
+		videoJson.Id = video.VideoID
 		videoJson.Author = authorJson
-		videoJson.PlayName = "http://" + c.Request.Host + "/public/video/" + video.PlayName
-		videoJson.CoverName = "http://" + c.Request.Host + "/public/cover/" + video.CoverName + ".png"
+		videoJson.PlayUrl = "http://" + c.Request.Host + "/public/video/" + video.PlayName
+		videoJson.CoverUrl = "http://" + c.Request.Host + "/public/cover/" + video.CoverName
 		videoJson.FavoriteCount = video.FavoriteCount
 		videoJson.CommentCount = video.CommentCount
 		videoJson.Title = video.Title

@@ -102,10 +102,10 @@ func FavoriteList(c *gin.Context) {
 		}
 		var isFavorite bool // 是否对视频点赞
 		video := Video{
-			Id:            int64(each.VideoID),
+			Id:            each.VideoID,
 			Author:        author,
-			PlayName:      "http://" + c.Request.Host + "/static/video/" + each.PlayName,
-			CoverName:     "http://" + c.Request.Host + "/static/cover/" + each.CoverName,
+			PlayUrl:       "http://" + c.Request.Host + "/public/video/" + each.PlayName,
+			CoverUrl:      "http://" + c.Request.Host + "/public/cover/" + each.CoverName,
 			FavoriteCount: each.FavoriteCount,
 			CommentCount:  each.CommentCount,
 			IsFavorite:    isFavorite,
