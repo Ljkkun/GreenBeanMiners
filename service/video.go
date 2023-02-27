@@ -56,14 +56,14 @@ func GetFeedVideosAndAuthorsRedis(videoList *[]model.Video, authors *[]model.Use
 // PublishVideo 将用户上传的视频信息写入数据库
 func PublishVideo(userID uint64, videoID uint64, videoName string, coverName string, title string) error {
 	video := model.Video{
-		VideoID:       videoID,
-		Title:         title,
-		PlayName:      videoName,
-		CoverName:     coverName,
-		FavoriteCount: 0,
-		CommentCount:  0,
-		AuthorID:      userID,
-		CreatedAt:     time.Now(),
+		VideoID:   videoID,
+		Title:     title,
+		PlayName:  videoName,
+		CoverName: coverName,
+		//FavoriteCount: 0,
+		//CommentCount:  0,
+		AuthorID:  userID,
+		CreatedAt: time.Now(),
 	}
 	if global.DB.Create(&video).Error != nil {
 		return errors.New("video表插入失败")
