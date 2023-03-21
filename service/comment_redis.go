@@ -17,7 +17,7 @@ func AddCommentInRedis(comment *model.Comment) error {
 	keyCommentsOfVideo := fmt.Sprintf(VideoCommentsPattern, comment.VideoID)
 	keyComment := fmt.Sprintf(CommentPattern, comment.CommentID)
 	keyVideo := fmt.Sprintf(VideoPattern, comment.VideoID)
-	// 判断keyCommentsOfVideo是否存在 存在则加入comment
+	// 判断 keyCommentsOfVideo 是否存在 存在则加入comment
 	lua := redis.NewScript(`
 				local key = KEYS[1]
 				local score = ARGV[1]
